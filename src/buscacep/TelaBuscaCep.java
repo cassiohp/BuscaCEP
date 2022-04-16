@@ -3,9 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package buscacep;
-import Atxy2k.CustomTextField.RestrictedTextField;
 import java.awt.Toolkit;
+import java.net.URL;
+import java.util.Iterator;
 import javax.swing.JOptionPane;
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 /**
  *
  * @author cassi
@@ -42,6 +46,7 @@ public class TelaBuscaCep extends javax.swing.JFrame {
         jbLimpar = new javax.swing.JButton();
         jbPesquisar = new javax.swing.JButton();
         jbSobre = new javax.swing.JButton();
+        jlbOk = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Buscador de CEP");
@@ -88,7 +93,9 @@ public class TelaBuscaCep extends javax.swing.JFrame {
 
         jlbUf.setText("UF :");
 
-        jcbUf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbUf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { ".", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
+        jcbUf.setSelectedItem(".");
+        jcbUf.setToolTipText("");
         jcbUf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbUfActionPerformed(evt);
@@ -115,14 +122,16 @@ public class TelaBuscaCep extends javax.swing.JFrame {
         jbSobre.setBorder(null);
         jbSobre.setBorderPainted(false);
         jbSobre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbSobre.setMaximumSize(new java.awt.Dimension(48, 48));
-        jbSobre.setMinimumSize(new java.awt.Dimension(48, 48));
-        jbSobre.setPreferredSize(new java.awt.Dimension(48, 48));
         jbSobre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbSobreActionPerformed(evt);
             }
         });
+
+        jlbOk.setForeground(new java.awt.Color(51, 255, 51));
+        jlbOk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbOk.setToolTipText("");
+        jlbOk.setPreferredSize(new java.awt.Dimension(29, 29));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,12 +157,14 @@ public class TelaBuscaCep extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jtxCep, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlbOk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
                         .addComponent(jlbUf)
-                        .addGap(18, 18, 18)
-                        .addComponent(jcbUf, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jcbUf, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbSobre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbSobre)
                         .addGap(28, 28, 28))
                     .addComponent(jtxEndereco)
                     .addComponent(jtxBairro)
@@ -175,7 +186,8 @@ public class TelaBuscaCep extends javax.swing.JFrame {
                     .addComponent(jtxCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlbUf)
                     .addComponent(jcbUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbSobre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbSobre)
+                    .addComponent(jlbOk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlbEndereco)
@@ -215,7 +227,12 @@ public class TelaBuscaCep extends javax.swing.JFrame {
     }//GEN-LAST:event_jcbUfActionPerformed
 
     private void jbLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparActionPerformed
-        // TODO add your handling code here:
+        jtxBairro.setText("");
+        jtxCep.setText("");
+        jtxCidade.setText("");
+        jtxEndereco.setText("");
+        jcbUf.setSelectedItem(".");
+        jlbOk.setVisible(false);
     }//GEN-LAST:event_jbLimparActionPerformed
 
     private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
@@ -223,7 +240,7 @@ public class TelaBuscaCep extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Informe o Cep Corretamente.");
             jtxCep.requestFocus();
         }else{
-            //Buscar Cep
+            buscarCep();
         }
         
             
@@ -295,6 +312,7 @@ public class TelaBuscaCep extends javax.swing.JFrame {
     private javax.swing.JLabel jlbCep;
     private javax.swing.JLabel jlbCidade;
     private javax.swing.JLabel jlbEndereco;
+    private javax.swing.JLabel jlbOk;
     private javax.swing.JLabel jlbUf;
     private javax.swing.JTextField jtxBairro;
     private javax.swing.JTextField jtxCep;
@@ -304,6 +322,61 @@ public class TelaBuscaCep extends javax.swing.JFrame {
 
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/iconeendereco.png")));
+        
+    }
+    
+    private void buscarCep(){
+        String logradouro = "";
+        String tipoLogradouro = "";
+        String resultado = null;
+        String cep = jtxCep.getText();
+        
+        try{
+            URL url = new URL("http://cep.republicavirtual.com.br/web_cep.php?cep=" + cep + "&formato=xml");
+            //Classe modelo para criação de variáveis xml
+            SAXReader xml = new SAXReader();
+            //Captura os dados do xml e atribui ao documento
+            Document documento = xml.read(url);
+            //Apoio para fazer a varredura do documento
+            Element root = documento.getRootElement();
+            for (Iterator<Element> it = root.elementIterator(); it.hasNext();) {
+                Element element = it.next();
+                if(element.getQualifiedName().equals("cidade")){
+                    jtxCidade.setText(element.getText());
+                }
+                if(element.getQualifiedName().equals("cidade")){
+                    jtxCidade.setText(element.getText());
+                }
+                if(element.getQualifiedName().equals("bairro")){
+                    jtxBairro.setText(element.getText());
+                }
+                if(element.getQualifiedName().equals("uf")){
+                    jcbUf.setSelectedItem(element.getText());
+                }
+                if(element.getQualifiedName().equals("tipo_logradouro")){
+                    tipoLogradouro = element.getText();
+                }
+                if(element.getQualifiedName().equals("logradouro")){
+                   logradouro = element.getText();
+                }
+                if(element.getQualifiedName().equals("resultado")){
+                   resultado = element.getText();
+                   if(resultado.equals("1") || resultado.equals("2")){
+                       jlbOk.setVisible(true);
+                       jlbOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/checked.png")));
+                       
+                   }else {
+                       JOptionPane.showMessageDialog(null, "CEP Inválido");
+                       jtxCep.setText("");
+                       jlbOk.setVisible(false);
+                   }
+                }
+            }
+            jtxEndereco.setText(tipoLogradouro + " " + logradouro);
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
         
     }
     
