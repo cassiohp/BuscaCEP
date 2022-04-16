@@ -4,7 +4,9 @@
  */
 package buscacep;
 
+import java.awt.Desktop;
 import java.awt.Toolkit;
+import java.net.URI;
 
 /**
  *
@@ -15,8 +17,7 @@ public class Sobre extends javax.swing.JDialog {
     /**
      * Creates new form Sobre
      */
-    public Sobre(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public Sobre(){
         initComponents();
         setIcon();
     }
@@ -49,6 +50,12 @@ public class Sobre extends javax.swing.JDialog {
 
         jlbLinkWeb.setForeground(javax.swing.UIManager.getDefaults().getColor("Actions.Blue"));
         jlbLinkWeb.setText("republicavirtual.com.br");
+        jlbLinkWeb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jlbLinkWeb.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlbLinkWebMouseClicked(evt);
+            }
+        });
 
         jbGitHub.setBackground(java.awt.SystemColor.control);
         jbGitHub.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/github.png"))); // NOI18N
@@ -102,55 +109,36 @@ public class Sobre extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbGitHubActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGitHubActionPerformed
-        // TODO add your handling code here:
+        abrirLink("https://github.com/cassiohp/BuscaCEP");
     }//GEN-LAST:event_jbGitHubActionPerformed
+
+    private void jlbLinkWebMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbLinkWebMouseClicked
+        abrirLink("https://www.republicavirtual.com.br/");
+    }//GEN-LAST:event_jlbLinkWebMouseClicked
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Sobre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Sobre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Sobre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Sobre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Sobre dialog = new Sobre(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+    
 
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/sobre.png")));
-
     }
+    
+    private void abrirLink(String site){
+
+        Desktop desktop = Desktop.getDesktop();
+        
+        try{
+            URI uri = new URI(site);
+            desktop.browse(uri);   
+        }catch(Exception e ){
+            System.out.println(e);  
+        }
+        
+        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbGitHub;
     private javax.swing.JLabel jlbAutor;
