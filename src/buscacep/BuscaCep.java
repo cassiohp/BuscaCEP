@@ -14,7 +14,8 @@ public class BuscaCep {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        TelaBuscaCep tela = new TelaBuscaCep();
+        tela.setVisible(true);
     }
     
 }
