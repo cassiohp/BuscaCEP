@@ -22,6 +22,10 @@ public class TelaBuscaCep extends javax.swing.JFrame {
     public TelaBuscaCep() {
         initComponents();
         setIcon();
+        jtxBairro.setEditable(false);
+        jtxCidade.setEditable(false);
+        jtxEndereco.setEditable(false);
+        jcbUf.setEnabled(false);
     }
 
     /**
