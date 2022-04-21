@@ -1,5 +1,5 @@
 ## Busca Cep v1.0.1
-----
+
 Desenvolvimento de um projeto simples que faz requisições para um WebService, efetua a leitura do xml e retorna esses valores para a interface.
 
 #### Aprendizado
